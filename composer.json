@@ -1,10 +1,14 @@
 {
-	"name": "wmde/php-vuejs-templating",
+	"name": "rossriley/php-vuejs-templating",
 	"description": "PHP implementation of Vue.js templating engine",
 	"type": "library",
 	"authors": [
 		{
 			"name": "Aleksey Bekh-Ivanov"
+		},
+		{
+			"name": "Ross Riley",
+			"email": "riley.ross@gmail.com"
 		}
 	],
 	"license": "LGPL-2.1-only",
