@@ -13,7 +13,10 @@ class BasicJsExpressionParser implements JsExpressionParser {
 		$expression = $this->normalizeExpression( $expression );
 		if ( strpos( $expression, '!' ) === 0 ) { // ! operator application
 			return new NegationOperator( $this->parse( substr( $expression, 1 ) ) );
-		} elseif ( strpos( $expression, "'" ) === 0 ) {
+		} elseif ( strpos($expression, '==') !== false ) {
+		    $parts = explode('==', $expression);
+            return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim("'" . $parts[1] . "'")));
+        } elseif ( strpos( $expression, "'" ) === 0 ) {
 			return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
 		} else {
 			$parts = explode( '.', $expression );
