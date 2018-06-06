@@ -18,16 +18,16 @@ class VariableAccess implements ParsedExpression {
 	 *
 	 * @return mixed
 	 */
-	public function evaluate( array $data ) {
-		$value = $data;
-		foreach ( $this->pathParts as $key ) {
-			if ( !array_key_exists( $key, $value ) ) {
-				$expression = implode( '.', $this->pathParts );
-				throw new \RuntimeException( "Undefined variable '{$expression}'" );
-			}
-			$value = $value[$key];
-		}
-		return $value;
-	}
+    public function evaluate( array $data ) {
+        $value = $data;
+        foreach ( $this->pathParts as $key ) {
+            if ( !array_key_exists( $key, $value ) ) {
+                $value[$key] = '';
+                return $value[$key];
+            }
+            $value = $value[$key];
+        }
+        return $value;
+    }
 
 }
