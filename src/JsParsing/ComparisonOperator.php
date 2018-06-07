@@ -20,7 +20,7 @@ class ComparisonOperator implements ParsedExpression {
 	 */
 	public function evaluate( array $data ): bool
     {
-        return $this->left->evaluate($data) === $this->right->evaluate($data);
+        return $this->left->evaluate($data) == $this->right->evaluate($data);
 	}
 
 }
