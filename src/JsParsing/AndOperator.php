@@ -18,14 +18,13 @@ class AndOperator implements ParsedExpression {
 	 */
 	public function evaluate( array $data ): bool
     {
-        $left = true;
         foreach ($this->expressions as $expr) {
-            if (!($left && ($left = $expr->evaluate($data)))) {
+            if (!$expr->evaluate($data)) {
                 return false;
             }
         }
 
-        return $left;
+        return true;
 	}
 
 }
