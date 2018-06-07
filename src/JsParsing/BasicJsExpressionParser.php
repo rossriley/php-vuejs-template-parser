@@ -14,11 +14,11 @@ class BasicJsExpressionParser implements JsExpressionParser {
 
         if (strpos($expression, '&&') !== false) {
             $parts = explode('&&', $expression);
-            array_map($parts, function($part) {
-               return $this->parse(trim($part));
+            array_walk($parts, function(&$part) {
+                $part = $this->parse(trim($part));
             });
 
-            return new AndOperator($parts);
+            return new AndOperator(...$parts);
         }
 
 		if ( strpos( $expression, '!' ) === 0 ) { // ! operator application
