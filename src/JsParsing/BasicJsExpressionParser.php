@@ -14,7 +14,7 @@ class BasicJsExpressionParser implements JsExpressionParser {
 
         if (strpos($expression, '&&') !== false) {
             $parts = explode('&&', $expression);
-            array_walk($parts, function($part) {
+            array_map($parts, function($part) {
                return $this->parse(trim($part));
             });
 
