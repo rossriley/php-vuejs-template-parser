@@ -16,6 +16,9 @@ class BasicJsExpressionParser implements JsExpressionParser {
 		} elseif (strpos($expression, '!=') !== false ){
 		    $parts = explode('!=', $expression);
 		    return new NegationOperator(new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1]))));
+        } elseif (strpos($expression, '&&') !== false) {
+		    $parts = explode('&&', $expression);
+            return new AndOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1])));
         } elseif ( strpos($expression, '==') !== false ) {
 		    $parts = explode('==', $expression);
             return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim("'" . $parts[1] . "'")));
