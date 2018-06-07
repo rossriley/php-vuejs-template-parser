@@ -4,13 +4,11 @@ namespace WMDE\VueJsTemplating\JsParsing;
 
 class AndOperator implements ParsedExpression {
 
-    protected $left;
-    protected $right;
+    protected $expressions;
 
-    public function __construct($left, $right)
+    public function __construct(...$expressions)
     {
-        $this->left = $left;
-        $this->right = $right;
+        $this->expressions = $expressions;
 	}
 
 	/**
@@ -20,7 +18,14 @@ class AndOperator implements ParsedExpression {
 	 */
 	public function evaluate( array $data ): bool
     {
-        return $this->left->evaluate($data) && $this->right->evaluate($data);
+        $left = true;
+        foreach ($this->expressions as $expr) {
+            if (!($left && ($left = $expr->evaluate($data)))) {
+                return false;
+            }
+        }
+        
+        return $left;
 	}
 
 }
