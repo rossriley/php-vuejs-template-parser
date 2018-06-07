@@ -10,6 +10,7 @@ use DOMNode;
 use DOMNodeList;
 use DOMText;
 use Exception;
+use InvalidArgumentException;
 use LibXMLError;
 
 use WMDE\VueJsTemplating\FilterExpressionParsing\FilterParser;
@@ -70,9 +71,8 @@ class Component {
 		$internalErrors = libxml_use_internal_errors( true );
 		$document = new DOMDocument();
 
-		//TODO Unicode characters in template will not work correctly. Fix.
-		if ( !$document->loadHTML( $template ) ) {
-			//TODO Test failure
+        if ( !$document->loadHTML( '<?xml encoding="utf-8" ?>' . $template ) ) {
+            throw new InvalidArgumentException('Could not parse supplied template. Check it is valid HTML');
 		}
 
 		/** @var LibXMLError[] $errors */
@@ -239,7 +239,8 @@ class Component {
 			list( $itemName, $listName ) = explode( ' in ', $node->getAttribute( 'v-for' ) );
 			$node->removeAttribute( 'v-for' );
 
-			foreach ( $data[$listName] as $item ) {
+			$items = $data[$listName] ?? [];
+			foreach ( $items as $item ) {
 				$newNode = $node->cloneNode( true );
 				$node->parentNode->insertBefore( $newNode, $node );
 				$this->handleNode( $newNode, array_merge( $data, [ $itemName => $item ] ) );
