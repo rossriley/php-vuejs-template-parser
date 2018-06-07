@@ -24,7 +24,7 @@ class AndOperator implements ParsedExpression {
                 return false;
             }
         }
-        
+
         return $left;
 	}
 

@@ -11,14 +11,21 @@ class BasicJsExpressionParser implements JsExpressionParser {
 	 */
 	public function parse( $expression ) {
 		$expression = $this->normalizeExpression( $expression );
+
+        if (strpos($expression, '&&') !== false) {
+            $parts = explode('&&', $expression);
+            $parts = array_walk($parts, function($part) {
+               return $this->parse(trim($part));
+            });
+
+            return new AndOperator($parts);
+        }
+
 		if ( strpos( $expression, '!' ) === 0 ) { // ! operator application
 			return new NegationOperator( $this->parse( substr( $expression, 1 ) ) );
 		} elseif (strpos($expression, '!=') !== false ){
 		    $parts = explode('!=', $expression);
 		    return new NegationOperator(new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1]))));
-        } elseif (strpos($expression, '&&') !== false) {
-		    $parts = explode('&&', $expression);
-            return new AndOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1])));
         } elseif ( strpos($expression, '==') !== false ) {
 		    $parts = explode('==', $expression);
             return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim("'" . $parts[1] . "'")));
