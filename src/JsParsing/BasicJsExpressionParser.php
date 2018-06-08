@@ -21,6 +21,15 @@ class BasicJsExpressionParser implements JsExpressionParser {
             return new AndOperator(...$parts);
         }
 
+        if (strpos($expression, '||') !== false) {
+            $parts = explode('||', $expression);
+            array_walk($parts, function(&$part) {
+                $part = $this->parse(trim($part));
+            });
+
+            return new OrOperator(...$parts);
+        }
+
         if ( strpos( $expression, '!' ) === 0 ) { // ! operator application
             return new NegationOperator( $this->parse( substr( $expression, 1 ) ) );
         } elseif (strpos($expression, '!=') !== false ){
