@@ -171,7 +171,7 @@ class Component {
 
     /**
      * For the purposes of a template parser we can simply re-map show blocks to if blocks
-     * @param DOMNode $node
+     * @param DOMNodeList $nodes
      */
     private function replaceShowWithIf(DOMNodeList $nodes): void
     {

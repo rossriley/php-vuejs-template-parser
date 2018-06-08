@@ -51,7 +51,12 @@ class BasicJsExpressionParser implements JsExpressionParser {
 	 *
 	 * @return string
 	 */
-	protected function normalizeExpression( $expression ) {
+	protected function normalizeExpression( $expression )
+    {
+	    if ($expression === "''") {
+	        $expression = '';
+        }
+
 		return trim( $expression );
 	}
 
