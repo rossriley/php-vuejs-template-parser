@@ -113,7 +113,6 @@ class Component {
 	 */
 	private function handleNode( DOMNode $node, array $data ) {
 		$this->replaceMustacheVariables( $node, $data );
-		$this->replaceShowWithIf($node, $data);
 
 		if ( !$this->isTextNode( $node ) ) {
 			$this->stripEventHandlers( $node );
@@ -121,6 +120,7 @@ class Component {
 			$this->handleRawHtml( $node, $data );
 
 			if ( !$this->isRemovedFromTheDom( $node ) ) {
+                $this->replaceShowWithIf($node->childNodes);
 				$this->handleAttributeBinding( $node, $data );
 				$this->handleIf( $node->childNodes, $data );
 
@@ -172,19 +172,19 @@ class Component {
     /**
      * For the purposes of a template parser we can simply re-map show blocks to if blocks
      * @param DOMNode $node
-     * @param array $data
      */
-    private function replaceShowWithIf(DOMNode $node, array $data): void
+    private function replaceShowWithIf(DOMNodeList $nodes): void
     {
-        if ( $this->isTextNode( $node ) ) {
-            return;
-        }
+        foreach ($nodes as $node) {
+            if ( $this->isTextNode( $node ) ) {
+                continue;
+            }
 
-        /** @var DOMElement $node */
-        if ( $node->hasAttribute( 'v-show' ) ) {
-            $argument = $node->getAttribute('v-show');
-            $node->setAttribute('v-if', $argument);
-            $node->removeAttribute('v-show');
+            /** @var DOMElement $node */
+            if ($node->hasAttribute('v-show')) {
+                $node->setAttribute('v-if', $node->getAttribute('v-show'));
+                $node->removeAttribute('v-show');
+            }
         }
     }
 
