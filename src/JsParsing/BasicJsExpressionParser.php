@@ -37,9 +37,11 @@ class BasicJsExpressionParser implements JsExpressionParser {
             return new NegationOperator(new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1]))));
         } elseif ( strpos($expression, '==') !== false ) {
             $parts = explode('==', $expression);
-            return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse("'" . trim($parts[1] ) . "'"));
+            return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1] )));
         } elseif ( strpos( $expression, "'" ) === 0 ) {
             return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
+        } elseif (is_numeric( $expression )) {
+            return new StringLiteral($expression);
         } else {
             $parts = explode( '.', $expression );
             return new VariableAccess( $parts );
