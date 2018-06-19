@@ -13,12 +13,12 @@ class AdditionOperator implements ParsedExpression {
         $this->right = $right;
 	}
 
-	/**
-	 * @param array $data
-	 *
-	 * @return bool
-	 */
-	public function evaluate( array $data ): bool
+    /**
+     * @param array $data
+     *
+     * @return numeric
+     */
+	public function evaluate( array $data )
     {
         return $this->left->evaluate($data) + $this->right->evaluate($data);
 	}
