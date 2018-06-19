@@ -259,8 +259,8 @@ class Component {
 			[$itemName, $listName] = explode( ' in ', $node->getAttribute( 'v-for' ) );
 			if (strpos($itemName, ',') !== false) {
 			    [$keyName, $itemName] = explode(',', $itemName);
-			    $keyName = trim('( ', $keyName);
-			    $itemName = trim(') ', $itemName);
+                $keyName = trim($keyName, ' (');
+                $itemName = trim($itemName, ') ');
             }
 			$node->removeAttribute( 'v-for' );
 
