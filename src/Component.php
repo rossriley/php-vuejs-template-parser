@@ -256,14 +256,20 @@ class Component {
 
 		/** @var DOMElement $node */
 		if ( $node->hasAttribute( 'v-for' ) ) {
-			list( $itemName, $listName ) = explode( ' in ', $node->getAttribute( 'v-for' ) );
+			[$itemName, $listName] = explode( ' in ', $node->getAttribute( 'v-for' ) );
+			if (strpos($itemName, ',') !== false) {
+			    [$keyName, $itemName] = explode(',', $itemName);
+			    $keyName = trim('( ', $keyName);
+			    $itemName = trim(') ', $itemName);
+            }
 			$node->removeAttribute( 'v-for' );
 
 			$items = $data[$listName] ?? [];
-			foreach ( $items as $key => $item ) {
+			foreach ( $items as $keyIndex => $item ) {
+			    $keyName = $keyName ?? 'key';
 				$newNode = $node->cloneNode( true );
 				$node->parentNode->insertBefore( $newNode, $node );
-				$this->handleNode( $newNode, array_merge( $data, [ $itemName => $item, 'key' => $key ] ) );
+				$this->handleNode( $newNode, array_merge( $data, [ $itemName => $item, $keyName => $keyIndex ] ) );
 			}
 
 			$this->removeNode( $node );
