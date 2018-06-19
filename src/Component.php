@@ -260,10 +260,10 @@ class Component {
 			$node->removeAttribute( 'v-for' );
 
 			$items = $data[$listName] ?? [];
-			foreach ( $items as $item ) {
+			foreach ( $items as $key => $item ) {
 				$newNode = $node->cloneNode( true );
 				$node->parentNode->insertBefore( $newNode, $node );
-				$this->handleNode( $newNode, array_merge( $data, [ $itemName => $item ] ) );
+				$this->handleNode( $newNode, array_merge( $data, [ $itemName => $item, 'key' => $key ] ) );
 			}
 
 			$this->removeNode( $node );
