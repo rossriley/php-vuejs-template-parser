@@ -162,10 +162,11 @@ class Component {
 				$text = str_replace( $matches[0][$index], $value, $text );
 			}
 
-			if ( $text !== $node->wholeText ) {
-				$newNode = $node->ownerDocument->createTextNode( $text );
-				$node->parentNode->replaceChild( $newNode, $node );
-			}
+            if ( $text !== $node->wholeText ) {
+                $newNode = $node->ownerDocument->createDocumentFragment( );
+                $newNode->appendXML($text);
+                $node->parentNode->replaceChild( $newNode, $node );
+            }
 		}
 	}
 
