@@ -51,6 +51,8 @@ class BasicJsExpressionParser implements JsExpressionParser {
             return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
         } elseif (is_numeric( $expression )) {
             return new StringLiteral($expression);
+        } elseif (json_decode($expression) !== null) {
+            return new JsonExpression($expression);
         } else {
             $parts = explode( '.', $expression );
             return new VariableAccess( $parts );
