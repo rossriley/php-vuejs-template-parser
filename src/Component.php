@@ -164,7 +164,7 @@ class Component {
 
             if ( $text !== $node->wholeText ) {
                 $newNode = $node->ownerDocument->createDocumentFragment( );
-                $newNode->appendXML($text);
+                $newNode->appendXML(htmlspecialchars($text, ENT_XML1, 'UTF-8'));
                 $node->parentNode->replaceChild( $newNode, $node );
             }
 		}
