@@ -169,7 +169,7 @@ class Component {
                 $xml = trim(str_replace('&', '&amp;', $text));
 
                 if (strlen($xml)>0) {
-                    $xml = sprintf('<span>%s</span>', $xml);
+                    $xml = sprintf('<?xml encoding="utf-8" ?><span>%s</span>', $xml);
                     $tmpDom->loadHTML($xml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
                     $xml = $tmpDom->saveXML($tmpDom->documentElement);
                 }
