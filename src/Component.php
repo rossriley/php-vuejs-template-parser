@@ -166,16 +166,16 @@ class Component {
 
 			    // This step ensures that we get valid XML to add to our fragment
                 $tmpDom = new DOMDocument();
-                $validXML = str_replace('&', '&amp;', $text);
+                $xml = str_replace('&', '&amp;', $text);
 
-                if (strlen($validXML)>0) {
-                    $tmpDom->loadHTML(str_replace('&', '&amp;', $text), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-                    $validXML = $tmpDom->saveXML($tmpDom->documentElement);
+                if (strlen($xml)>0) {
+                    $tmpDom->loadHTML($xml), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                    $xml = $tmpDom->saveXML($tmpDom->documentElement);
                 }
 
                 // Now we have it we can insert our fragment into the main dom
                 $newNode = $node->ownerDocument->createDocumentFragment( );
-                $newNode->appendXML($validXML);
+                $newNode->appendXML($xml);
                 $node->parentNode->replaceChild( $newNode, $node );
             }
 		}
