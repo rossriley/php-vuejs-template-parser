@@ -166,7 +166,7 @@ class Component {
 
 			    // This step ensures that we get valid XML to add to our fragment
                 $tmpDom = new DOMDocument();
-                $xml = str_replace('&', '&amp;', $text);
+                $xml = trim(str_replace('&', '&amp;', $text));
 
                 if (strlen($xml)>0) {
                     $tmpDom->loadHTML($xml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
