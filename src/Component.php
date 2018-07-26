@@ -169,7 +169,7 @@ class Component {
                 $xml = str_replace('&', '&amp;', $text);
 
                 if (strlen($xml)>0) {
-                    $tmpDom->loadHTML($xml), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                    $tmpDom->loadHTML($xml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
                     $xml = $tmpDom->saveXML($tmpDom->documentElement);
                 }
 
