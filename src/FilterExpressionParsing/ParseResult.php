@@ -18,15 +18,25 @@ class ParseResult {
 	 * @var FilterCall[]
 	 */
 	private $filterCalls = [];
+    /**
+     * @var null
+     */
+    private $environment;
+    /**
+     * @var null
+     */
+    private $context;
 
-	/**
+    /**
 	 * @param string[] $expressions
 	 * @param FilterCall[] $filterCalls
 	 */
-	public function __construct( array $expressions, array $filterCalls ) {
+	public function __construct( array $expressions, array $filterCalls, $environment = null, $context = null ) {
 		$this->expressions = $expressions;
 		$this->filterCalls = $filterCalls;
-	}
+        $this->environment = $environment;
+        $this->context = $context;
+    }
 
 	/**
 	 * @return string[]

@@ -155,7 +155,10 @@ class Component {
 			preg_match_all( $regex, $text, $matches );
 
 			foreach ( $matches['expression'] as $index => $expression ) {
-				$value = $this->filterParser->parse( $expression )
+				$value = $this->filterParser
+                    ->setCurrentEnvironment($this)
+                    ->setCurrentContext($data)
+                    ->parse( $expression )
 					->toExpression( $this->expressionParser, $this->filters )
 					->evaluate( $data );
 
@@ -210,7 +213,9 @@ class Component {
 				continue;
 			}
 
-			$value = $this->filterParser->parse( $attribute->value )
+			$value = $this->filterParser->setCurrentEnvironment($this)
+                ->setCurrentContext($data)
+                ->parse( $attribute->value )
 				->toExpression( $this->expressionParser, $this->filters )
 				->evaluate( $data );
 

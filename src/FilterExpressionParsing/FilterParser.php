@@ -12,8 +12,11 @@ class FilterParser {
 	private $expressionStart = 0;
 
 	private $nowParsingFilterList = false;
-	private $filterArgStart = null;
-	private $filterArgEnd = null;
+	private $filterArgStart;
+	private $filterArgEnd;
+
+	private $currentEnvironment;
+	private $currentContext;
 
 	/**
 	 * @param string $exp
@@ -151,6 +154,8 @@ class FilterParser {
 			$args = ( new self() )->parse( $argString )->expressions();
 		}
 
+		$args += [$this->currentContext, $this->currentEnvironment];
+
 		$this->filters[] = new FilterCall( $filterName, $args );
 	}
 
@@ -171,5 +176,43 @@ class FilterParser {
 		$this->filterArgStart = null;
 		$this->filterArgEnd = null;
 	}
+
+    /**
+     * @param mixed $currentEnvironment
+     * @return FilterParser
+     */
+    public function setCurrentEnvironment($currentEnvironment): FilterParser
+    {
+        $this->currentEnvironment = $currentEnvironment;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentEnvironment()
+    {
+        return $this->currentEnvironment;
+    }
+
+    /**
+     * @param mixed $currentContext
+     * @return FilterParser
+     */
+    public function setCurrentContext($currentContext): FilterParser
+    {
+        $this->currentContext = $currentContext;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentContext()
+    {
+        return $this->currentContext;
+    }
 
 }
