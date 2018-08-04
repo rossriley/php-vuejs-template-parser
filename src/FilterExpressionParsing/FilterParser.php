@@ -135,7 +135,7 @@ class FilterParser {
 			$this->pushFilter( $exp, $pos, $currentFilterStart );
 		}
 
-		return new ParseResult( $this->expressions, $this->filters );
+		return new ParseResult( $this->expressions, $this->filters, $this->getCurrentEnvironment(), $this->getCurrentContext() );
 	}
 
 	private function pushFilter( $exp, $pos, $currentFilterStart ) {
@@ -153,8 +153,6 @@ class FilterParser {
 			);
 			$args = ( new self() )->parse( $argString )->expressions();
 		}
-
-		$args += [$this->currentContext, $this->currentEnvironment];
 
 		$this->filters[] = new FilterCall( $filterName, $args );
 	}

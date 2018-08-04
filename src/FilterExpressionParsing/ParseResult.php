@@ -71,6 +71,15 @@ class ParseResult {
 				throw new RuntimeException( "Filter '{$filterCall->filterName()}' is undefined" );
 			}
 			$filter = $filters[$filterCall->filterName()];
+
+			if ($filter instanceof EnvironmentAware) {
+			    $filter->setEnvironment($this->environment);
+            }
+
+            if ($filter instanceof ContextAware) {
+                $filter->setContext($this->context);
+            }
+
 			$filerArguments = array_merge(
 				$nextFilterArguments,
 				$this->parseExpressions( $expressionParser, $filterCall->arguments() )
