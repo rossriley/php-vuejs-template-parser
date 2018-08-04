@@ -349,4 +349,12 @@ class Component {
 		return $node->parentNode === null;
 	}
 
+    /**
+     * @return callable[]
+     */
+    public function getFilters(): array
+    {
+        return $this->filters;
+    }
+
 }
