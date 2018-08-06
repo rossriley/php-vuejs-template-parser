@@ -38,6 +38,8 @@ class BasicJsExpressionParser implements JsExpressionParser {
         } elseif ( strpos($expression, '==') !== false ) {
             $parts = explode('==', $expression);
             return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1] )));
+        } elseif ( strpos( $expression, "'" ) === 0 ) {
+            return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
         } elseif (strpos($expression, ' > ') !== false ) {
             $parts = explode(' > ', $expression);
             return new GreaterThanOperator($this->parse(trim($parts[0], '( ')) , $this->parse(trim($parts[1], ' )')));
@@ -47,8 +49,6 @@ class BasicJsExpressionParser implements JsExpressionParser {
         } elseif(strpos($expression, '+') !== false) {
             $parts = explode('+', $expression);
             return new AdditionOperator( $this->parse(trim($parts[0], '( ')) , $this->parse(trim($parts[1], ' )')) );
-        } elseif ( strpos( $expression, "'" ) === 0 ) {
-            return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
         } elseif (is_numeric( $expression )) {
             return new StringLiteral($expression);
         } elseif (json_decode($expression) !== null) {
