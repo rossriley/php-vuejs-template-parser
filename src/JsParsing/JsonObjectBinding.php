@@ -23,15 +23,16 @@ class JsonObjectBinding implements ParsedExpression {
      *
      * @return mixed
      */
-	public function evaluate( array $data ) {
-	    $result = '';
-        $bindings = explode(trim($this->string, '{}'), ',');
+    public function evaluate( array $data ) {
+        $result = '';
+        $bindings = explode(',', trim($this->string, '{}'));
         foreach ($bindings as $item) {
             list($left, $right) = explode(':', $item);
-            $result .= sprintf('%s : $s;', $left, $this->parser->parse($right));
+            $boundValue = $this->parser->parse($right)->evaluate($data);
+            $result .= sprintf('%s : %s;', $left, $boundValue);
         }
 
         return $result;
-	}
+    }
 
 }

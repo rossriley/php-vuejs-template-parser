@@ -40,7 +40,7 @@ class BasicJsExpressionParser implements JsExpressionParser {
             return new ComparisonOperator($this->parse(trim($parts[0])), $this->parse(trim($parts[1] )));
         } elseif ( strpos( $expression, "'" ) === 0 ) {
             return new StringLiteral( substr( $expression, 1, strlen( $expression ) - 2 ) );
-        } elseif ( $expression[0] === '{' && $expression[-1] === '}')  {
+        } elseif ( is_string($expression) && !empty($expression) && $expression[0] === '{' && $expression[-1] === '}')  {
             return new JsonObjectBinding($expression, $this);
         } elseif (strpos($expression, ' > ') !== false ) {
             $parts = explode(' > ', $expression);
