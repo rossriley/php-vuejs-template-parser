@@ -233,6 +233,11 @@ class Component {
                         }
                     }
                     $node->setAttribute($name, implode(';', $styles));
+                } elseif ($name === 'class') {
+			        $classes = [];
+                    foreach ($value as $classname => $setting) {
+                        if ($setting) $classname;                    }
+                    $node->setAttribute($name, implode(' ', $classes));
                 }
             } else {
 				$node->setAttribute( $name, $value );
