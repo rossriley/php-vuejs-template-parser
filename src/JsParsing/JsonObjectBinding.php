@@ -27,7 +27,7 @@ class JsonObjectBinding implements ParsedExpression {
         $result = [];
         $bindings = explode(',', trim($this->string, '{}'));
         foreach ($bindings as $item) {
-            list($left, $right) = explode(':', $item);
+            [$left, $right] = explode(':', $item);
             $boundValue = $this->parser->parse($right)->evaluate($data);
             $result[$left] = $boundValue;
         }
