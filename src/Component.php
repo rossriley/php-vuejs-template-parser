@@ -224,7 +224,17 @@ class Component {
 				if ( $value ) {
 					$node->setAttribute( $name, $name );
 				}
-			} else {
+			} elseif(is_array($value)) {
+			    if ($name === 'style') {
+			        $styles = [];
+                    foreach ($value as $prop => $setting) {
+                        if ($setting) {
+                            $styles[]= sprintf('%s:%s', $prop, $setting);
+                        }
+                    }
+                    $node->setAttribute($name, implode(';', $styles));
+                }
+            } else {
 				$node->setAttribute( $name, $value );
 			}
 			$node->removeAttribute( $attribute->name );

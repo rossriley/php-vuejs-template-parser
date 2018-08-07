@@ -29,7 +29,7 @@ class JsonObjectBinding implements ParsedExpression {
         foreach ($bindings as $item) {
             list($left, $right) = explode(':', $item);
             $boundValue = $this->parser->parse($right)->evaluate($data);
-            $result .= sprintf('%s : %s;', $left, $boundValue);
+            $result[$left] = $boundValue;
         }
 
         return $result;
