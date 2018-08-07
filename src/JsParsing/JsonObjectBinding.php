@@ -24,7 +24,7 @@ class JsonObjectBinding implements ParsedExpression {
      * @return mixed
      */
     public function evaluate( array $data ) {
-        $result = '';
+        $result = [];
         $bindings = explode(',', trim($this->string, '{}'));
         foreach ($bindings as $item) {
             list($left, $right) = explode(':', $item);
