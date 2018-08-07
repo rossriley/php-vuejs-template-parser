@@ -229,6 +229,7 @@ class Component {
 			        $styles = [];
                     foreach ($value as $prop => $setting) {
                         if ($setting) {
+                            $prop = strtolower(preg_replace('/([A-Z])/', '-$1', $prop));
                             $styles[]= sprintf('%s:%s', $prop, $setting);
                         }
                     }
