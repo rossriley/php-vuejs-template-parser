@@ -304,6 +304,9 @@ class Component {
 			$node->removeAttribute( 'v-for' );
 
             $items = $this->evaluateExpression($listName, $data) ?? [];
+            if (!is_iterable($items)) {
+                $items = [];
+            }
 			foreach ( $items as $keyIndex => $item ) {
 			    $keyName = $keyName ?? 'key';
 				$newNode = $node->cloneNode( true );
