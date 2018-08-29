@@ -151,7 +151,7 @@ class Component {
 		if ( $node instanceof DOMText ) {
 			$text = $node->wholeText;
 
-			$regex = '/\{\{(?P<expression>.*?)\}\}/x';
+			$regex = '/\{\{(?P<expression>.*?)\}\}/xs';
 			preg_match_all( $regex, $text, $matches );
 
 			foreach ( $matches['expression'] as $index => $expression ) {
