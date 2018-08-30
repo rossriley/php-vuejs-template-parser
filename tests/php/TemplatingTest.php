@@ -74,14 +74,6 @@ class TemplatingTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function templateWithMustacheVariable_VariableIsUndefined_ThrowsException() {
-		$this->setExpectedException( Exception::class );
-		$this->createAndRender( '<p>{{value}}</p>', [] );
-	}
-
-	/**
-	 * @test
-	 */
 	public function templateWithFilter_FilterIsUndefined_ThrowsException() {
 		$this->setExpectedException( Exception::class );
 		$this->createAndRender( '<p>{{value|nonexistentFilter}}</p>', [ 'value' => 'some value' ] );

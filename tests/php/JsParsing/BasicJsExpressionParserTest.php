@@ -69,4 +69,19 @@ class BasicJsExpressionParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( true, $result );
     }
 
+    public function testOROperator()
+    {
+        $jsExpressionEvaluator = new BasicJsExpressionParser();
+        $parsedExpression = $jsExpressionEvaluator->parse( "true || false" );
+        $result = $parsedExpression->evaluate( [] );
+
+        $this->assertEquals( true, $result );
+
+
+        $parsedExpression = $jsExpressionEvaluator->parse( "false || ''" );
+        $result = $parsedExpression->evaluate( [] );
+
+        $this->assertEquals( false, $result );
+    }
+
 }
