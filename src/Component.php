@@ -174,7 +174,7 @@ class Component {
                 if (strlen($xml)>0) {
                     $xml = sprintf('<?xml encoding="utf-8" ?><span>%s</span>', $xml);
                     libxml_use_internal_errors(true);
-                    $tmpDom->loadHTML($xml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOBLANKS);
+                    $tmpDom->loadHTML($xml, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
                     $xml = $tmpDom->saveXML($tmpDom->documentElement);
                     libxml_clear_errors();
                     $xml = substr($xml, 6);
