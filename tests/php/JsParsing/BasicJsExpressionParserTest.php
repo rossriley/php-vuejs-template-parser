@@ -94,4 +94,18 @@ class BasicJsExpressionParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( 'test', $result['val2'] );
     }
 
+    public function testGreaterThan()
+    {
+        $jsExpressionEvaluator = new BasicJsExpressionParser();
+        $parsedExpression = $jsExpressionEvaluator->parse( "5 > 2" );
+        $result = $parsedExpression->evaluate( [] );
+
+        $this->assertTrue($result);
+
+
+        $parsedExpression = $jsExpressionEvaluator->parse( "5 > 9" );
+        $result = $parsedExpression->evaluate( [] );
+        $this->assertFalse($result);
+    }
+
 }
