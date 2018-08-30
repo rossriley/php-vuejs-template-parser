@@ -136,4 +136,13 @@ class BasicJsExpressionParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($result);
     }
 
+    public function testAddition()
+    {
+        $jsExpressionEvaluator = new BasicJsExpressionParser();
+        $parsedExpression = $jsExpressionEvaluator->parse( " val + 2 " );
+        $result = $parsedExpression->evaluate( ['val' => 10] );
+
+        $this->assertEquals(12, $result);
+    }
+
 }
