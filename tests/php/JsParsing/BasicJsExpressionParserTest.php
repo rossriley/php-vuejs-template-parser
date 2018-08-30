@@ -122,4 +122,18 @@ class BasicJsExpressionParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($result);
     }
 
+    public function testComparison()
+    {
+        $jsExpressionEvaluator = new BasicJsExpressionParser();
+        $parsedExpression = $jsExpressionEvaluator->parse( " 'left string' == 'right string' " );
+        $result = $parsedExpression->evaluate( [] );
+
+        $this->assertFalse($result);
+
+        $parsedExpression = $jsExpressionEvaluator->parse( " 'left string' == 'left string' " );
+        $result = $parsedExpression->evaluate( [] );
+
+        $this->assertTrue($result);
+    }
+
 }
