@@ -84,4 +84,14 @@ class BasicJsExpressionParserTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals( false, $result );
     }
 
+    public function testJsonObject()
+    {
+        $jsExpressionEvaluator = new BasicJsExpressionParser();
+        $parsedExpression = $jsExpressionEvaluator->parse( "{val1:foo,val2:bar}" );
+        $result = $parsedExpression->evaluate( ['foo'=>'test', 'bar'=>'test'] );
+
+        $this->assertEquals( 'test', $result['val1'] );
+        $this->assertEquals( 'test', $result['val2'] );
+    }
+
 }
