@@ -304,9 +304,19 @@ class Component {
 			$node->removeAttribute( 'v-for' );
 
             $items = $this->evaluateExpression($listName, $data) ?? [];
+            if (strpos($listName, '|') !== false) {
+                $parsedItems = $this->filterParser
+                    ->parse($listName)
+                    ->toExpression( $this->expressionParser, $this->filters )
+                    ->evaluate( $data );
+
+                $items = $parsedItems;
+            }
+
             if (!is_iterable($items)) {
                 $items = [];
             }
+
 			foreach ( $items as $keyIndex => $item ) {
 			    $keyName = $keyName ?? 'key';
 				$newNode = $node->cloneNode( true );
