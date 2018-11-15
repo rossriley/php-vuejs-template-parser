@@ -267,7 +267,15 @@ class Component {
 			if ( $node->hasAttribute( 'v-if' ) ) {
 				$conditionString = $node->getAttribute( 'v-if' );
 				$node->removeAttribute( 'v-if' );
-				$condition = $this->evaluateExpression( $conditionString, $data );
+                if (strpos($conditionString, '|') !== false) {
+                    $condition = $this->filterParser
+                        ->parse($conditionString)
+                        ->toExpression( $this->expressionParser, $this->filters )
+                        ->evaluate( $data );
+                } else {
+                    $condition = $this->evaluateExpression( $conditionString, $data );
+                }
+
 
 				if ( !$condition ) {
 					$nodesToRemove[] = $node;
