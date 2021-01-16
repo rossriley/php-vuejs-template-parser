@@ -67,7 +67,9 @@ class Component {
 	 * @return DOMDocument
 	 */
 	private function parseHtml( $template ) {
-		$entityLoaderDisabled = libxml_disable_entity_loader( true );
+	    if (PHP_VERSION < 8) {
+            $entityLoaderDisabled = libxml_disable_entity_loader( true );
+        }
 		$internalErrors = libxml_use_internal_errors( true );
 		$document = new DOMDocument();
 
@@ -75,13 +77,14 @@ class Component {
             throw new InvalidArgumentException('Could not parse supplied template. Check it is valid HTML');
 		}
 
-		/** @var LibXMLError[] $errors */
 		$errors = libxml_get_errors();
 		libxml_clear_errors();
 
 		// Restore previous state
 		libxml_use_internal_errors( $internalErrors );
-		libxml_disable_entity_loader( $entityLoaderDisabled );
+        if (PHP_VERSION < 8) {
+            libxml_disable_entity_loader( $entityLoaderDisabled );
+        }
 
 		foreach ( $errors as $error ) {
 			//TODO html5 tags can fail parsing
