@@ -21,7 +21,7 @@ class VariableAccess implements ParsedExpression {
     public function evaluate( array $data ) {
         $value = $data;
         foreach ( $this->pathParts as $key ) {
-            if ( !array_key_exists( $key, $value ) ) {
+            if ( !array_key_exists( $key, (array)$value ) ) {
                 $value[$key] = '';
                 return $value[$key];
             }
